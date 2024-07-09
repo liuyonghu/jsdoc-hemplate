@@ -1,26 +1,26 @@
 # Docdash
-[![Build Status](https://api.travis-ci.org/clenemt/docdash.png?branch=master)](https://travis-ci.org/clenemt/docdash) [![npm version](https://badge.fury.io/js/docdash.svg)](https://badge.fury.io/js/docdash) [![license](https://img.shields.io/npm/l/docdash.svg)](LICENSE.md)
+[![Build Status](https://api.travis-ci.org/clenemt/hemplate.png?branch=master)](https://travis-ci.org/clenemt/hemplate) [![npm version](https://badge.fury.io/js/hemplate.svg)](https://badge.fury.io/js/hemplate) [![license](https://img.shields.io/npm/l/hemplate.svg)](LICENSE.md)
 
 A clean, responsive documentation template theme for JSDoc 4.
 
-![docdash-screenshot](https://cloud.githubusercontent.com/assets/447956/13398144/4dde7f36-defd-11e5-8909-1a9013302cb9.png)
+![hemplate-screenshot](https://cloud.githubusercontent.com/assets/447956/13398144/4dde7f36-defd-11e5-8909-1a9013302cb9.png)
 
-![docdash-screenshot-2](https://cloud.githubusercontent.com/assets/447956/13401057/e30effd8-df0a-11e5-9f51-66257ac38e94.jpg)
+![hemplate-screenshot-2](https://cloud.githubusercontent.com/assets/447956/13401057/e30effd8-df0a-11e5-9f51-66257ac38e94.jpg)
 
 ## Example
-See http://clenemt.github.io/docdash/ for a sample demo. :rocket:
+See http://clenemt.github.io/hemplate/ for a sample demo. :rocket:
 
 ## Install
 
 ```bash
-$ npm install docdash
+$ npm install hemplate
 ```
 
 ## Usage
 Clone repository to your designated `jsdoc` template directory, then:
 
 ```bash
-$ jsdoc entry-file.js -t path/to/docdash
+$ jsdoc entry-file.js -t path/to/hemplate
 ```
 
 ## Usage (npm)
@@ -36,7 +36,7 @@ In your `jsdoc.json` file, add a template option.
 
 ```json
 "opts": {
-  "template": "node_modules/docdash"
+  "template": "node_modules/hemplate"
 }
 ```
 
@@ -57,7 +57,7 @@ See the config file for the [fixtures](fixtures/fixtures.conf.json) or the sampl
         "plugins/markdown"
     ],
     "opts": {
-        "template": "assets/template/docdash/",
+        "template": "assets/template/hemplate/",
         "encoding": "utf8",
         "destination": "docs/",
         "recurse": true,
@@ -75,7 +75,7 @@ Docdash supports the following options:
 
 ```json5
 {
-    "docdash": {
+    "hemplate": {
         "static": [false|true],         // Display the static members inside the navbar
         "sort": [false|true],           // Sort the methods in the navbar
         "sectionOrder": [               // Order the main section in the navbar (default order shown here)

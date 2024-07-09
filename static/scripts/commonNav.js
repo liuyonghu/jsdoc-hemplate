@@ -24,5 +24,5 @@ if (typeof fetch === 'function') {
     })
     .catch(error => console.error(error))
 } else {
-  console.error(Error('Browser too old to display commonNav (remove commonNav docdash option)'))
+  console.error(Error('Browser too old to display commonNav (remove commonNav hemplate option)'))
 }

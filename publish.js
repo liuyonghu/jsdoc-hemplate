@@ -327,9 +327,9 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
 
     if (items && items.length) {
         var itemsNav = '';
-        var docdash = env && env.conf && env.conf.docdash || {};
-        var level = typeof docdash.navLevel === 'number' && docdash.navLevel >= 0 ?
-            docdash.navLevel :
+        var hemplate = env && env.conf && env.conf.hemplate || {};
+        var level = typeof hemplate.navLevel === 'number' && hemplate.navLevel >= 0 ?
+            hemplate.navLevel :
             Infinity;
 
         items.forEach(function(item) {
@@ -340,7 +340,7 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
             var classes = '';
 
             // show private class?
-            if (docdash.private === false && item.access === 'private') return;
+            if (hemplate.private === false && item.access === 'private') return;
 
             // depth to show?
             if (item.ancestors && item.ancestors.length > level) {
@@ -359,13 +359,13 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
                 }
                 itemsNav += linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''));
 
-                if (docdash.static && members.find(function (m) { return m.scope === 'static'; } )) {
+                if (hemplate.static && members.find(function (m) { return m.scope === 'static'; } )) {
                     itemsNav += "<ul class='members'>";
 
                     members.forEach(function (member) {
                         if (!member.scope === 'static') return;
                         itemsNav += "<li data-type='member'";
-                        if(docdash.collapse)
+                        if(hemplate.collapse)
                             itemsNav += " style='display: none;'";
                         itemsNav += ">";
                         itemsNav += linkto(member.longname, member.name);
@@ -379,14 +379,14 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
                     itemsNav += "<ul class='methods'>";
 
                     methods.forEach(function (method) {
-                        if (docdash.static === false && method.scope === 'static') return;
-                        if (docdash.private === false && method.access === 'private') return;
+                        if (hemplate.static === false && method.scope === 'static') return;
+                        if (hemplate.private === false && method.access === 'private') return;
 
                         var navItem = '';
                         var navItemLink = linkto(method.longname, method.name);
 
                         navItem += "<li data-type='method'";
-                        if(docdash.collapse)
+                        if(hemplate.collapse)
                             navItem += " style='display: none;'";
                         navItem += ">";
                         navItem += navItemLink;
@@ -404,7 +404,7 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
         });
 
         if (itemsNav !== '') {
-            if(docdash.collapse === "top") {
+            if(hemplate.collapse === "top") {
                 nav += '<h3 class="collapsed_header">' + itemHeading + '</h3><ul class="collapse_top">' + itemsNav + '</ul>';
             }
             else {
@@ -443,13 +443,13 @@ function buildNav(members) {
     var nav = '<h2><a href="index.html">Home</a></h2>';
     var seen = {};
     var seenTutorials = {};
-    var docdash = env && env.conf && env.conf.docdash || {};
-    if(docdash.menu){
-        for(var menu in docdash.menu){
+    var hemplate = env && env.conf && env.conf.hemplate || {};
+    if(hemplate.menu){
+        for(var menu in hemplate.menu){
             nav += '<h2><a ';
             //add attributes
-            for(var attr in docdash.menu[menu]){
-                nav += attr+'="' + docdash.menu[menu][attr] + '" ';
+            for(var attr in hemplate.menu[menu]){
+                nav += attr+'="' + hemplate.menu[menu][attr] + '" ';
             }
             nav += '>' + menu + '</a></h2>';
         }
@@ -461,7 +461,7 @@ function buildNav(members) {
             var globalNav = '';
     
             members.globals.forEach(function(g) {
-                if ( (docdash.typedefs || g.kind !== 'typedef') && !hasOwnProp.call(seen, g.longname) ) {
+                if ( (hemplate.typedefs || g.kind !== 'typedef') && !hasOwnProp.call(seen, g.longname) ) {
                     globalNav += '<li>' + linkto(g.longname, g.name) + '</li>';
                 }
                 seen[g.longname] = true;
@@ -472,7 +472,7 @@ function buildNav(members) {
                 ret += '<h3>' + linkto('global', 'Global') + '</h3>';
             }
             else {
-                if(docdash.collapse === "top") {
+                if(hemplate.collapse === "top") {
                     ret += '<h3 class="collapsed_header">Global</h3><ul class="collapse_top">' + globalNav + '</ul>';
                 }
                 else {
@@ -485,7 +485,7 @@ function buildNav(members) {
     var defaultOrder = [
         'Classes', 'Modules', 'Externals', 'Events', 'Namespaces', 'Mixins', 'Tutorials', 'Interfaces', 'Global'
     ];
-    var order = docdash.sectionOrder || defaultOrder;
+    var order = hemplate.sectionOrder || defaultOrder;
     var sections = {
         Classes: buildMemberNav(members.classes, 'Classes', seen, linkto),
         Modules: buildMemberNav(members.modules, 'Modules', {}, linkto),
@@ -508,7 +508,7 @@ function buildNav(members) {
     @param {Tutorial} tutorials
  */
 exports.publish = function(taffyData, opts, tutorials) {
-    var docdash = env && env.conf && env.conf.docdash || {};
+    var hemplate = env && env.conf && env.conf.hemplate || {};
     data = taffyData;
 
     var conf = env.conf.templates || {};
@@ -536,14 +536,14 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     data = helper.prune(data);
 
-    docdash.sort !== false && data.sort('longname, version, since');
+    hemplate.sort !== false && data.sort('longname, version, since');
     helper.addEventListeners(data);
 
     var sourceFiles = {};
     var sourceFilePaths = [];
     data().each(function(doclet) {
-         if(docdash.removeQuotes){
-            if(docdash.removeQuotes === "all"){
+         if(hemplate.removeQuotes){
+            if(hemplate.removeQuotes === "all"){
                 if(doclet.name){
                     doclet.name = doclet.name.replace(/"/g, '');
                     doclet.name = doclet.name.replace(/'/g, '');
@@ -553,7 +553,7 @@ exports.publish = function(taffyData, opts, tutorials) {
                     doclet.longname = doclet.longname.replace(/'/g, '');
                 }
             }
-            else if(docdash.removeQuotes === "trim"){
+            else if(hemplate.removeQuotes === "trim"){
                 if(doclet.name){
                     doclet.name = doclet.name.replace(/^"(.*)"$/, '$1');
                     doclet.name = doclet.name.replace(/^'(.*)'$/, '$1');
@@ -609,16 +609,16 @@ exports.publish = function(taffyData, opts, tutorials) {
         if (packageInfo.name) {
             var packageName = packageInfo.name.split('/');
 
-            if (packageName.length > 1 && docdash.scopeInOutputPath !== false) {
+            if (packageName.length > 1 && hemplate.scopeInOutputPath !== false) {
                 subdirs.push(packageName[0]);
             }
 
-            if (docdash.nameInOutputPath !== false) {
+            if (hemplate.nameInOutputPath !== false) {
                 subdirs.push((packageName.length > 1 ? packageName[1] : packageName[0]));
             }
         }
 
-        if (packageInfo.version && docdash.versionInOutputPath !== false) {
+        if (packageInfo.version && hemplate.versionInOutputPath !== false) {
             subdirs.push(packageInfo.version);
         }
 
@@ -669,7 +669,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     }
     data().each(function(doclet) {
         var url = helper.createLink(doclet);
-        if (docdash.noURLEncode) {
+        if (hemplate.noURLEncode) {
             url = decodeURI(url);
         }
         helper.registerLink(doclet.longname, url);
@@ -758,7 +758,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     indexUrl);
 
     // common nav generation, no need for templating here, we already have full html
-    if (docdash.commonNav) {
+    if (hemplate.commonNav) {
         fs.writeFileSync(path.join(outdir, 'nav.inc.html'), view.nav, 'utf8');
     }
 
