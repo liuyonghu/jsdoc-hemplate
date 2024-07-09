@@ -1,5 +1,5 @@
 {
-  "name": "docdash",
+  "name": "jsdoc-hemplate",
   "version": "2.0.2",
   "description": "A clean, responsive documentation template theme for JSDoc 3 inspired by lodash and minami",
   "main": "publish.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/clenemt/docdash.git"
+    "url": "https://github.com/liuyonghu/jsdoc-hemplate.git"
   },
   "devDependencies": {
     "browser-sync": "latest",
     "jsdoc": "latest",
     "watch-run": "latest"
   },
-  "author": "Clement Moron <clement.moron@gmail.com>",
+  "author": "liuyonghu",
   "license": "Apache-2.0",
   "keywords": [
     "jsdoc",
